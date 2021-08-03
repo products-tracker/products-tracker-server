@@ -21,8 +21,9 @@ app.use('*', (req,res) => {
 app.get('/products', getProductHandler);
 
 function getProductHandler(req, res){
-  const product = req.query.product;
-  getFunction(product)
-    .then(inventory => res.send(inventory))
+  const sku = req.query.product;
+  const postalCode = req.query.postalCode;
+  getFunction(sku, postalCode)
+    .then(stores => res.send(stores))
     .catch(err => console.error(err));
 }

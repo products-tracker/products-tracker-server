@@ -3,9 +3,9 @@
 const axios = require('axios');
 const cache = require('./cache.js');
 
-function getFunction(product) {
-  const key = 'something' + product;
-  const API = `API_domain?key=${process.env.YOUR_API_KEY}&query=${product}`;
+function getFunction(sku, postalCode) {
+  const key = 'stores near ' + postalCode;
+  const API = `https://api.bestbuy.com/v1/products/${sku}/stores.json?postalCode=${postalCode}&apiKey=${process.env.BESTBUY_API}`;
 
   if(!cache[key]) {
     cache[key] = {};
@@ -16,26 +16,23 @@ function getFunction(product) {
 }
 function parseFunctionData(data) {
   try{
-    const inventory = data.data.map(data => {
-      return new Thing(data);
+    const stores = data.stores.map(data => {
+      return new Store(data);
     });
-    return Promise.resolve(inventory);
+    return Promise.resolve(stores);
   } catch (err) {
     return Promise.reject(err);
   }
 }
 
-// {
-//     let dailyForecast = response.data.data.results.map(data => new Forecast(data));
-//     return Promise.resolve(dailyForecast);
-//   })
-//   .catch(err => Promise.reject(err));
 
-class Thing {
+
+class Store {
   constructor(data) {
-    this.store = data.location ;
-    this.inStock = data.inStock;
-    this.quantity = data.quantity;
+    this.store = data.name ;
+    this.address = data.address;
+    this.inStock = data.lowStock;
+    this.distance = data.distance;
   }
 }
 
