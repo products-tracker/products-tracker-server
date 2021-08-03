@@ -22,12 +22,17 @@ app.use('*', (req,res) => {
   res.status(404).send('route not found');
 })
 
+
+
+app.get('/products', getProductHandler);
+
 function fakeStoreHandler(req, res) {
   axios.get('https://fakestoreapi.com/products/1')    
     .then(json=>res.send(json.data))
 }
 
-function weatherHandler(req, res){
+
+function getProductHandler(req, res){
   const product = req.query.product;
   getFunction(product)
     .then(inventory => res.send(inventory))
