@@ -18,9 +18,9 @@ app.use('*', (req,res) => {
 })
 
 
-app.get('/weather', weatherHandler);
+app.get('/products', getProductHandler);
 
-function weatherHandler(req, res){
+function getProductHandler(req, res){
   const product = req.query.product;
   getFunction(product)
     .then(inventory => res.send(inventory))
