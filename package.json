@@ -1,4 +1,5 @@
 {
+
   "name": "products-tracker-server",
   "version": "1.0.0",
   "description": "",
@@ -7,6 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/products-tracker/products-tracker-server.git"
@@ -18,6 +20,7 @@
     "url": "https://github.com/products-tracker/products-tracker-server/issues"
   },
   "homepage": "https://github.com/products-tracker/products-tracker-server#readme",
+
   "dependencies": {
     "axios": "^0.21.1",
     "cors": "^2.8.5",

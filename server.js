@@ -12,6 +12,7 @@ const mongoose = require('mongoose');
 const mongooseOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 mongoose.connect(process.env.MONGODB_URI, mongooseOptions);
 
+
 const getFunction = require ('./getFunction');
 const getProductList = require('./getProductList')
 
@@ -20,18 +21,17 @@ app.use(express.json());
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
 
-
-// app.get('/weather', weatherHandler);
-
 app.get('/fakestore', fakeStoreHandler);
 
 app.get('/products', getProductHandler);
+
 
 app.get('/productlist', getProductListHandler);
 
 //app.get('/stores', Store.show);
 app.post('/stores', Store.add);
 app.delete('/stores', Store.delete);
+
 
 app.use('*', (req,res) => {
   res.status(404).send('route not found');
@@ -53,7 +53,8 @@ function getProductHandler(req, res){
 
 function getProductListHandler(req, res){
   const product = req.query.product;
-  getProductList(product)
+  const sku = req.query.sku;
+  getProductList(product, sku)
     .then(data => res.send(data))
     .catch(err => console.error(err));
 }
