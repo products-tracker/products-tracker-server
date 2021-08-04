@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 3001;
 const axios = require('axios');
 
 const getFunction = require ('./getFunction');
+const getProductList = require('./getProductList')
 
 app.use(cors());
 app.use(express.json());
@@ -16,15 +17,25 @@ app.use(express.json());
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
 
 
-// app.use('*', (req,res) => {
-//   res.status(404).send('rout not found');
-// })
+// app.get('/weather', weatherHandler);
 
+app.get('/fakestore', fakeStoreHandler);
 
 app.get('/products', getProductHandler);
 
-async function getProductHandler(req, res){
-  const sku = req.query.sku;
+app.get('/productlist', getProductListHandler)
+
+app.use('*', (req,res) => {
+  res.status(404).send('route not found');
+})
+
+function fakeStoreHandler(req, res) {
+  axios.get('https://fakestoreapi.com/products/1')    
+    .then(json=>res.send(json.data))
+}
+
+function getProductHandler(req, res){
+  const sku = req.query.product;
   const postalCode = req.query.postalCode;
 
   getFunction(sku, postalCode)
@@ -32,3 +43,14 @@ async function getProductHandler(req, res){
     .catch(err => console.error(err));
 
 }
+
+function getProductListHandler(req, res){
+  const product = req.query.product;
+  getProductList(product)
+    .then(data => res.send(data))
+    .catch(err => console.error(err));
+}
+
+
+}
+
