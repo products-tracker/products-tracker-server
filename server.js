@@ -16,9 +16,6 @@ app.use(express.json());
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
 
-
-// app.get('/weather', weatherHandler);
-
 app.get('/fakestore', fakeStoreHandler);
 
 app.get('/products', getProductHandler);
@@ -45,7 +42,8 @@ function getProductHandler(req, res){
 
 function getProductListHandler(req, res){
   const product = req.query.product;
-  getProductList(product)
+  const sku = req.query.sku;
+  getProductList(product, sku)
     .then(data => res.send(data))
     .catch(err => console.error(err));
 }
