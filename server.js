@@ -4,6 +4,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const app = express();
+//const axios = require('axios');
 const PORT = process.env.PORT || 3001;
 const axios = require('axios');
 
@@ -14,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
+
 
 // app.get('/weather', weatherHandler);
 
@@ -35,9 +37,11 @@ function fakeStoreHandler(req, res) {
 function getProductHandler(req, res){
   const sku = req.query.product;
   const postalCode = req.query.postalCode;
+
   getFunction(sku, postalCode)
     .then(stores => res.send(stores))
     .catch(err => console.error(err));
+
 }
 
 function getProductListHandler(req, res){
@@ -46,3 +50,7 @@ function getProductListHandler(req, res){
     .then(data => res.send(data))
     .catch(err => console.error(err));
 }
+
+
+}
+

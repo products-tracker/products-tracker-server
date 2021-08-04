@@ -4,7 +4,9 @@ const axios = require('axios');
 const cache = require('./cache.js');
 
 function getFunction(sku, postalCode) {
-  const key = 'stores near ' + postalCode;
+
+  const key = `Stores near ${postalCode} with sku:${sku}`;
+
   const API = `https://api.bestbuy.com/v1/products/${sku}/stores.json?postalCode=${postalCode}&apiKey=${process.env.BESTBUY_API}`;
 
   if(!cache[key]) {
@@ -25,13 +27,13 @@ function parseFunctionData(data) {
   }
 }
 
-
-
 class Store {
   constructor(data) {
     this.store = data.name ;
     this.address = data.address;
-    this.inStock = data.lowStock;
+
+    this.lowInStock = data.lowStock;
+
     this.distance = data.distance;
   }
 }
