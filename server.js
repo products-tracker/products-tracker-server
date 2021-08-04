@@ -7,6 +7,11 @@ const app = express();
 //const axios = require('axios');
 const PORT = process.env.PORT || 3001;
 const axios = require('axios');
+const Store = require('./modules/store.js');
+const mongoose = require('mongoose');
+const mongooseOptions = { useNewUrlParser: true, useUnifiedTopology: true };
+mongoose.connect(process.env.MONGODB_URI, mongooseOptions);
+
 
 const getFunction = require ('./getFunction');
 const getProductList = require('./getProductList')
@@ -20,7 +25,13 @@ app.get('/fakestore', fakeStoreHandler);
 
 app.get('/products', getProductHandler);
 
-app.get('/productlist', getProductListHandler)
+
+app.get('/productlist', getProductListHandler);
+
+//app.get('/stores', Store.show);
+app.post('/stores', Store.add);
+app.delete('/stores', Store.delete);
+
 
 app.use('*', (req,res) => {
   res.status(404).send('route not found');

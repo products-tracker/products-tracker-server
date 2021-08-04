@@ -3,9 +3,11 @@
 const axios = require('axios');
 const cache = require('./cache.js');
 
+
 function getProductList(product, sku) {
   const key = 'products: ' + product;
   const API =  `https://api.bestbuy.com/v1/products(longDescription=${product}*)?show=sku,name,image,regularPrice&pageSize=15&page=1&apiKey=${process.env.BESTBUY_API}&format=json`
+
 
   if(!cache[key]) {
     cache[key] = {};
@@ -16,10 +18,12 @@ function getProductList(product, sku) {
 }
 function parseFunctionData(data) {
   try{
+
     const products = data.products.map(data => {
       return new Product(data);
     });
     return Promise.resolve(products);
+
   } catch (err) {
     return Promise.reject(err);
   }
