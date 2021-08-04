@@ -7,64 +7,75 @@ const User = require('../models/User.js');
 const Store = {};
 
 
-Store.show = (req, res) => {
-  const token = req.headers.authorization.split(' ')[1];
+// Store.show = (req, res) => {
+//   const token = req.headers.authorization.split(' ')[1];
 
-  jwt.verify(token, getKey, {}, async function(err, user){
-    if(err) {
-      res.send('invalid token');
-    } else {
-      const email = user.email;
-      await User.find({email}, (err, user) => {
-        if (err) {
-          res.send('invalid user');
-        } else {
-          res.send(user.books);
-        }
-      })
-    }
-  })
+//   jwt.verify(token, getKey, {}, async function(err, user){
+//     if(err) {
+//       res.send('invalid token');
+//     } else {
+//       const email = user.email;
+//       await User.find({email}, (err, user) => {
+//         if (err) {
+//           res.send('invalid user');
+//         } else {
+//           res.send(user.stores);
+//         }
+//       })
+//     }
+//   })
+// }
+
+Store.add = async (req, res) => {
+  // const token = req.headers.authorization.split(' ')[1];
+
+  // jwt.verify(token, getKey, {}, async function(err, user){
+  //   if(err) {
+  //     res.send('invalid token');
+  //   } else {
+      // const {email, name, address, lowInStock, distance } =req.body;
+      // const newStore = { name, address, lowInStock, distance };
+      // await User.findOne({ email }, (err, user) => {
+      //   user.stores.push(newStore);
+      //   user.save().then(() => {
+      //     res.send(user.stores)
+      //   })
+      //   .catch(err => console.error(err))
+      // })
+  //   }
+  // })
+  const newUser = new User({
+    'email': req.body.email,
+    'stores': req.body.stores
+  });
+  
+  await newUser.save()
+    .then(()=> {
+      res.send(newUser);
+    })
+
+
 }
 
-Store.add = (req, res) => {
-  const token = req.headers.authorization.split(' ')[1];
+Store.delete = async (req, res) => {
+  // const token = req.headers.authorization.split(' ')[1];
 
-  jwt.verify(token, getKey, {}, async function(err, user){
-    if(err) {
-      res.send('invalid token');
-    } else {
-      const {email, name, description, status } =req.body;
-      const newBook = { name, description, status };
-      await User.findOne({ email }, (err, user) => {
-        user.books.push(newBook);
-        user.save().then(() => {
-          res.send(user.books)
-        })
-        .catch(err => console.error(err))
-      })
-    }
-  })
-}
-
-Store.delete = (req, res) => {
-  const token = req.headers.authorization.split(' ')[1];
-
-  jwt.verify(token, getKey, {}, async function(err, user){
-    if(err) {
-      res.send('invalid token');
-    } else {
-      const id = Number(req.params.id);
+  // jwt.verify(token, getKey, {}, async function(err, user){
+  //   if(err) {
+  //     res.send('invalid token');
+  //   } else {
+      const id = parseFloat(req.params.id);
       const email = req.params.email;
       await User.findOne({ email }, (err, user) => {
-        const filtered = user.books.filter(book => book.id != id);
-        user.books = filtered;
+        const filtered = user.books.filter(store => store.id != id);
+        user.stores = filtered;
         user.save().then(() => {
-          res.send(user.books)
+          res.send(user.stores)
         })
         .catch(err => console.error(err))
       })
-    }
-  })
+  //   }
+  // })
 }
 
 
