@@ -35,13 +35,12 @@ function fakeStoreHandler(req, res) {
 }
 
 function getProductHandler(req, res){
-  const sku = req.query.product;
+  const sku = req.query.sku;
   const postalCode = req.query.postalCode;
 
   getFunction(sku, postalCode)
     .then(stores => res.send(stores))
     .catch(err => console.error(err));
-
 }
 
 function getProductListHandler(req, res){
@@ -50,7 +49,3 @@ function getProductListHandler(req, res){
     .then(data => res.send(data))
     .catch(err => console.error(err));
 }
-
-
-}
-

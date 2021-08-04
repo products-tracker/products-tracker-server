@@ -31,9 +31,11 @@ class Store {
   constructor(data) {
     this.store = data.name ;
     this.address = data.address;
-
-    this.lowInStock = data.lowStock;
-
+    if (data.lowStock === true) {
+      this.lowInStock = 'In Stock'
+    } else {
+      this.lowInStock = 'Out of Stock'
+    }
     this.distance = data.distance;
   }
 }
