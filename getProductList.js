@@ -30,7 +30,7 @@ function parseFunctionData(data) {
 class Product {
   constructor(data) {
     this.sku = data.sku ;
-    this.addrnameess = data.name;
+    this.name = data.name;
     this.type = data.type;
     this.price = data.regularPrice;
   }
