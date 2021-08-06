@@ -7,14 +7,15 @@ const app = express();
 //const axios = require('axios');
 const PORT = process.env.PORT || 3001;
 const axios = require('axios');
-const Store = require('./modules/store.js');
+const Product = require('./modules/product.js');
 const mongoose = require('mongoose');
 const mongooseOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 mongoose.connect(process.env.MONGODB_URI, mongooseOptions);
 
 
 const getFunction = require ('./getFunction');
-const getProductList = require('./getProductList')
+const getPriceAndName = require ('./getPriceAndName');
+const getProductList = require('./getProductList');
 
 app.use(cors());
 app.use(express.json());
@@ -25,12 +26,14 @@ app.get('/fakestore', fakeStoreHandler);
 
 app.get('/products', getProductHandler);
 
+app.get('/price', getPriceHandler);
+
 
 app.get('/productlist', getProductListHandler);
 
-//app.get('/stores', Store.show);
-app.post('/stores', Store.add);
-app.delete('/stores', Store.delete);
+app.get('/stores', Product.show);
+app.post('/stores', Product.add);
+//app.delete('/stores', Product.delete);
 
 
 app.use('*', (req,res) => {
@@ -48,6 +51,13 @@ function getProductHandler(req, res){
 
   getFunction(sku, postalCode)
     .then(stores => res.send(stores))
+    .catch(err => console.error(err));
+}
+function getPriceHandler(req, res){
+  const sku = req.query.sku;
+
+  getPriceAndName(sku)
+    .then(product => res.send(product))
     .catch(err => console.error(err));
 }
 
