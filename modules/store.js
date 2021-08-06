@@ -34,6 +34,7 @@ Store.add = async (req, res) => {
   //   if(err) {
   //     res.send('invalid token');
   //   } else {
+
       //const {email, name, address, lowInStock, distance } =req.body;
       const email = req.body;
       const newUser = new User({email : email});
@@ -49,6 +50,7 @@ Store.add = async (req, res) => {
   // })
   await newUser.save().then(() => {
       res.send(user.stores)
+
     })
     .catch(err => console.error(err));
 
@@ -62,6 +64,7 @@ Store.delete = async (req, res) => {
   //   if(err) {
   //     res.send('invalid token');
   //   } else {
+
       const id = parseFloat(req.params.id);
       const email = req.params.email;
       await User.findOne({ email }, (err, user) => {
@@ -72,6 +75,7 @@ Store.delete = async (req, res) => {
         })
         .catch(err => console.error(err))
       })
+
   //   }
   // })
 }

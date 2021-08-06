@@ -4,9 +4,9 @@ const axios = require('axios');
 const cache = require('./cache.js');
 
 
-function getProductList(product, sku) {
+function getProductList(product) {
   const key = 'products: ' + product;
-  const API =  `https://api.bestbuy.com/v1/products(longDescription=${product}*)?show=sku,name,image,regularPrice&pageSize=15&page=1&apiKey=${process.env.BESTBUY_API}&format=json`
+  const API =  `https://api.bestbuy.com/v1/products(name=${product}*&itemUpdateDate>2021-08-01T16:00:00&active=true)?show=sku,name,image,regularPrice&pageSize=15&page=1&apiKey=${process.env.BESTBUY_API}&format=json`
 
 
   if(!cache[key]) {
@@ -35,7 +35,7 @@ class Product {
   constructor(data) {
     this.sku = data.sku ;
     this.name = data.name;
-    this.type = data.type;
+    // this.type = data.type;
     this.price = data.regularPrice;
     this.image = data.image
   }
