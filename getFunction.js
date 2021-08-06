@@ -27,6 +27,7 @@ function parseFunctionData(data) {
   }
 }
 
+
 class Store {
   constructor(data) {
     this.store = data.name ;
@@ -34,7 +35,7 @@ class Store {
     if (data.lowStock === true) {
       this.lowInStock = 'In Stock'
     } else {
-      this.lowInStock = 'Out of Stock'
+      this.lowInStock = 'Low in Stock'
     }
     this.distance = data.distance;
   }
