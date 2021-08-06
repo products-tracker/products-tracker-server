@@ -33,17 +33,19 @@ Store.add = async (req, res) => {
   //   if(err) {
   //     res.send('invalid token');
   //   } else {
-      // const {email, name, address, lowInStock, distance } =req.body;
-      // const newStore = { name, address, lowInStock, distance };
-      // await User.findOne({ email }, (err, user) => {
-      //   user.stores.push(newStore);
-      //   user.save().then(() => {
-      //     res.send(user.stores)
-      //   })
-      //   .catch(err => console.error(err))
-      // })
+  //     const {email, store, address, low_in_stock, distance } =req.body;
+  //     const newStore = { store, address, low_in_stock, distance };
+  //     await User.findOne({ email }, (err, user) => {
+  //       user.stores.push(newStore);
+  //       user.save().then(() => {
+  //         res.send(user.stores)
+  //       })
+  //       .catch(err => console.error(err))
+  //     })
   //   }
   // })
+  console.log(req.body)
+
   const newUser = new User({
     'email': req.body.email,
     'stores': req.body.stores
@@ -64,16 +66,17 @@ Store.delete = async (req, res) => {
   //   if(err) {
   //     res.send('invalid token');
   //   } else {
-      const id = parseFloat(req.params.id);
-      const email = req.params.email;
-      await User.findOne({ email }, (err, user) => {
-        const filtered = user.books.filter(store => store.id != id);
-        user.stores = filtered;
-        user.save().then(() => {
-          res.send(user.stores)
-        })
-        .catch(err => console.error(err))
-      })
+      console.log(req.params)
+      // const id = parseFloat(req.params.id);
+      // const email = req.params.email;
+      // await User.findOne({ email }, (err, user) => {
+      //   const filtered = user.books.filter(store => store.id != id);
+      //   user.stores = filtered;
+      //   user.save().then(() => {
+      //     res.send(user.stores)
+      //   })
+      //   .catch(err => console.error(err))
+      // })
   //   }
   // })
 }

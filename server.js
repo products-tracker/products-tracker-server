@@ -38,7 +38,7 @@ app.use('*', (req,res) => {
 })
 
 function fakeStoreHandler(req, res) {
-  axios.get('https://fakestoreapi.com/products/1')    
+  axios.get('https://fakestoreapi.com/products')    
     .then(json=>res.send(json.data))
 }
 
@@ -53,8 +53,8 @@ function getProductHandler(req, res){
 
 function getProductListHandler(req, res){
   const product = req.query.product;
-  const sku = req.query.sku;
-  getProductList(product, sku)
-    .then(data => res.send(data))
+  // const sku = req.query.sku;
+  getProductList(product)
+    .then(products => res.send(products))
     .catch(err => console.error(err));
 }
